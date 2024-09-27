@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using SRVCWebApi.Repositorios;
 
 public class Startup
 {
@@ -20,8 +23,21 @@ public class Startup
     {
         // Aquí puedes agregar los servicios que necesites, como Entity Framework, MVC, etc.
         services.AddControllers(); // Agrega soporte para controladores
-        services.AddDbContext<DbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); // Descomenta y configura tu contexto
+                                   //services.AddDbContext<DbContext>(options =>
+                                   //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); // Descomenta y configura tu contexto
+
+        //SE DECLARA CADA REPOSITORIO
+        services.AddScoped<HistoryRepository>();
+        services.AddScoped<UsuarioRepositorio>();
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll",
+                builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+        });
+
+        services.AddSwaggerGen();
+
     }
 
     // Este método se llama en tiempo de ejecución. Usa este método para configurar la tubería de solicitud HTTP.
@@ -30,6 +46,11 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API-V1");
+            });
         }
         else
         {
@@ -46,7 +67,7 @@ public class Startup
 
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapControllers(); // Mapea los controladores
+            endpoints.MapControllers();
         });
     }
 }

@@ -17,5 +17,24 @@ namespace SRVCWebApi
         public DbSet<Registro> Registro { get; set; }
         public DbSet<Salida> Salida { get; set; }
 
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //base.OnConfiguring(optionsBuilder);
+            if (!optionsBuilder.IsConfigured)
+            {
+
+            }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Usuario>(entity =>
+            {
+                entity.Property(e => e.Id).IsUnicode(true);
+
+            });
+        }
     }
 }

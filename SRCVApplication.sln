@@ -3,9 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SRVCWebApi", "SRVCWebApi\SRVCWebApi.csproj", "{83708DAB-25E1-43D4-9AB1-A269E612359C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SRVCWebApi", "SRVCWebApi\SRVCWebApi.csproj", "{83708DAB-25E1-43D4-9AB1-A269E612359C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SRVCWinForms", "SRVCWinForms\SRVCWinForms.csproj", "{6CF5EC51-2D2A-4180-B3DA-11FD886DD37A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SRVCWinForms", "SRVCWinForms\SRVCWinForms.csproj", "{6CF5EC51-2D2A-4180-B3DA-11FD886DD37A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{83708DAB-25E1-43D4-9AB1-A269E612359C} = {83708DAB-25E1-43D4-9AB1-A269E612359C}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,5 +1,6 @@
 ﻿using SRVCWebApi.Modelos;
 using SRVCWinForms.source.Inteface;
+using SRVCWinForms.source.Service;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,12 +24,13 @@ namespace SRVCWinForms.views
         private extern static void SendMessage(System.IntPtr hWnd, int wMsg, int wParam, int lParam);
 
 
-        public Login(IUsuarioService usuarioService)
+        public Login()
         {
             InitializeComponent();
-            _usuarioService = usuarioService;
+            _usuarioService = new UsuarioService();
         }
 
+     
         private void Login_Load(object sender, EventArgs e)
         {
 

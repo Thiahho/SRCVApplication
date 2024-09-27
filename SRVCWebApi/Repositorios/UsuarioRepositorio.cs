@@ -12,13 +12,17 @@ namespace SRVCWebApi.Repositorios
         {
             _context = context;
         }
-
+        public async Task<Usuario> GetByUsernamePass(string usuario, string pass)
+        {
+            return await _context.Usuarios.Where(u => u.Nombre== usuario && u.Password== pass)
+                .Include(c => c.Tipo).FirstOrDefaultAsync();
+        }
         public async Task<Usuario> Login(string usuario, string password)
         {
             Usuario user = null;
             try
             {
-                var query = "SELECT * FROM usu WHERE usu = @usuario and pass=@password";
+                var query = "SELECT usu, pass,tipo FROM usu WHERE usu = '@usuario' and pass='@password'";
                 user= await _context.Usuarios.FromSqlRaw(query,
                     new SqlParameter("@usuario", usuario),
                     new SqlParameter("@password", password)

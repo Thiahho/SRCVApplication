@@ -1,4 +1,6 @@
-﻿using SRVCWebApi.Modelos;
+﻿using SRVCWebApi.Controllers;
+using SRVCWebApi.Modelos;
+using SRVCWebApi.Repositorios;
 using SRVCWinForms.source.Inteface;
 using System;
 using System.Collections.Generic;
@@ -13,8 +15,14 @@ namespace SRVCWinForms.source.Service
     {
         private const string API = "api/Usuario";
         private readonly HttpClient httpClient;
+        private readonly UsuarioRepositorio _usuarioRepositorio;
 
-        public UsuarioService(HttpClient httpClient)
+
+        public UsuarioService()
+        {
+        }
+
+        public UsuarioService(HttpClient httpClient )
         {
             this.httpClient = httpClient;
         }
@@ -34,14 +42,22 @@ namespace SRVCWinForms.source.Service
         {
             try
             {
-                var response = await httpClient.PostAsJsonAsync($"{API}/login", usuario);
+                var response = await httpClient.PostAsJsonAsync($"{API}/Login", usuario);
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadFromJsonAsync<Usuario>();
+                    var user=  await response.Content.ReadFromJsonAsync<Usuario>();
+                    if (user != null)
+                    {
+                        return user;
+                    }
+                    else
+                    {
+                        throw new Exception("La respuesta de la API no contiene un usuario.");    
+                    }
                 }
                 else
                 {
-                    return null;
+                    throw new Exception("La respuesta de la API es nula.");
                 }
             }
             catch (Exception ex)

@@ -16,22 +16,36 @@ namespace SRVCWebApi.Controllers
             _usuarioRepositorio = usuarioRepositorio;
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody]Usuario usuario)
-        {
-            if (usuario == null || string.IsNullOrEmpty(usuario.Nombre) || string.IsNullOrEmpty(usuario.Password))
-            {
-                return BadRequest("Datos inválidos.");
+        //[HttpPost("login")]
+        //public async Task<IActionResult> Login([FromBody]Usuario usuario)
+        //{
+        //    if (usuario == null || string.IsNullOrEmpty(usuario.Nombre) || string.IsNullOrEmpty(usuario.Password))
+        //    {
+        //        return BadRequest("Datos inválidos.");
 
-            }
+        //    }
+        //    try
+        //    {
+        //        var user = await _usuarioRepositorio.Login(usuario.Nombre, usuario.Password);
+        //        return Ok(user);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Unauthorized(ex.Message);
+        //    }
+        //}
+
+        [HttpPost]
+        public async Task<ActionResult<Usuario>> Login([FromBody]Usuario usuario)
+        {
             try
             {
-                var user = await _usuarioRepositorio.Login(usuario.Nombre, usuario.Password);
-                return Ok(user);
+                var user = await _usuarioRepositorio.GetByUsernamePass(usuario.Nombre, usuario.Password);
+                return user == null ? NotFound() : user;
             }
             catch (Exception ex)
             {
-                return Unauthorized(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 

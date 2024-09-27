@@ -101,7 +101,7 @@
             Controls.Add(pictureBox1);
             Name = "Main";
             Text = "Main";
-            Load += Main_Load;
+            //Load += Main_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }

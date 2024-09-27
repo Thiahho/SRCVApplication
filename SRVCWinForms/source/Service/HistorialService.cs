@@ -48,5 +48,9 @@ namespace SRVCWinForms.source.Service
             }
         }
 
+        Task<ActionResult<Registro>> IHistorialService.GetRegistroById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
